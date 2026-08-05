@@ -10,7 +10,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.write("Welcome to my Book Recommendation System!")
+st.write("Discover popular books and get personalized recommendations.")
 
 # Load models
 @st.cache_data
@@ -117,8 +117,9 @@ else:
     )
 
     if st.button("Recommend"):
+        with st.spinner("Finding similar books..."):
 
-        recommendations = recommend(selected_book)
+            recommendations = recommend(selected_book)
 
         if len(recommendations) == 0:
 
@@ -132,13 +133,6 @@ else:
 
                 with cols[idx]:
 
-                    st.image(
-                        book["image"],
-                        use_container_width=True
-                    )
-
-                    st.markdown(
-                        f"**{book['title']}**"
-                    )
-
-                    st.caption(book["author"])
+                    st.image(book["image"],use_container_width=True)
+                    st.markdown(f"### {book['title']}")
+                    st.caption(f"✍️ {book['author']}")
