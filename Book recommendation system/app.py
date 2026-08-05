@@ -21,13 +21,13 @@ st.write("Files:", list(MODEL_DIR.glob("*")))
 st.write("Discover popular books and get personalized recommendations.")
 
 # Load models
-@st.cache_data
+@st.cache_resource
 def load_data():
-    popular_books = pd.read_csv("models/popular_books.csv")
-    books = pd.read_pickle("models/books.pkl")
-    book_pivot = pd.read_pickle("models/book_pivot.pkl")
+    popular_books = pd.read_csv(MODEL_DIR / "popular_books.csv")
+    books = pd.read_pickle(MODEL_DIR / "books.pkl")
+    book_pivot = pd.read_pickle(MODEL_DIR / "book_pivot.pkl")
 
-    with open("models/similarity.pkl", "rb") as f:
+    with open(MODEL_DIR / "similarity.pkl", "rb") as f:
         similarity = pickle.load(f)
 
     return popular_books, books, book_pivot, similarity
