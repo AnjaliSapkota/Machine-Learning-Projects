@@ -38,9 +38,40 @@ option = st.sidebar.radio(
     ]
 )
 
+# Recommendation Function
+
+def recommend(book_name, n=5):
+
+    if book_name not in book_pivot.index:
+        return []
+
+    index = np.where(book_pivot.index == book_name)[0][0]
+
+    similar_items = sorted(
+        list(enumerate(similarity[index])),
+        key=lambda x: x[1],
+        reverse=True
+    )[1:n+1]
+
+    recommendations = []
+
+    for item in similar_items:
+
+        title = book_pivot.index[item[0]]
+
+        temp = books[
+            books["Book_Title"] == title
+        ].drop_duplicates("Book_Title")
+
+        recommendations.append({
+            "title": temp["Book_Title"].values[0],
+            "author": temp["Book_Author"].values[0],
+            "image": temp["Image_URL_L"].values[0]
+        })
+
+    return recommendations
+
 # Popular Books Page
-
-
 if option == "Popular Books":
 
     st.header("🔥 Most Popular Books")
@@ -71,3 +102,42 @@ if option == "Popular Books":
             st.write(
                 f"👥 {popular_books.iloc[i]['num_ratings']} Ratings"
             )
+
+
+# Collaborative Filtering
+
+else:
+
+    st.header("📖 Find Similar Books")
+
+    selected_book = st.selectbox(
+        "Select a Book",
+        sorted(book_pivot.index.tolist())
+    )
+
+    if st.button("Recommend"):
+
+        recommendations = recommend(selected_book)
+
+        if len(recommendations) == 0:
+
+            st.warning("Book not found.")
+
+        else:
+
+            cols = st.columns(5)
+
+            for idx, book in enumerate(recommendations):
+
+                with cols[idx]:
+
+                    st.image(
+                        book["image"],
+                        use_container_width=True
+                    )
+
+                    st.markdown(
+                        f"**{book['title']}**"
+                    )
+
+                    st.caption(book["author"])
