@@ -14,9 +14,9 @@ st.set_page_config(
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_DIR = BASE_DIR / "models"
 
-st.write("BASE_DIR:", BASE_DIR)
-st.write("MODEL_DIR exists:", MODEL_DIR.exists())
-st.write("Files:", list(MODEL_DIR.glob("*")))
+# st.write("BASE_DIR:", BASE_DIR)
+# st.write("MODEL_DIR exists:", MODEL_DIR.exists())
+# st.write("Files:", list(MODEL_DIR.glob("*")))
 
 st.write("Discover popular books and get personalized recommendations.")
 
