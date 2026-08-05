@@ -13,6 +13,7 @@ st.set_page_config(
 st.write("Welcome to my Book Recommendation System!")
 
 # Load models
+@st.cache_data
 def load_data():
     popular_books = pd.read_csv("models/popular_books.csv")
     books = pd.read_pickle("models/books.pkl")
