@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+from pathlib import Path
 
 # Page Configuration
 st.set_page_config(
@@ -9,6 +10,9 @@ st.set_page_config(
     page_icon="📚",
     layout="wide"
 )
+
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_DIR = BASE_DIR / "models"
 
 st.write("Discover popular books and get personalized recommendations.")
 
